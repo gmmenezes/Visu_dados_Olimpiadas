@@ -36,7 +36,7 @@ df = df [( df['Year'] >= 1992) & ( df ['Year'] <= 2020)]
 df [ 'Total_Medals' ] = df [ 'Gold' ] + df [ 'Silver' ] + df [ 'Bronze' ]
 df_country_medals = df.groupby('Country_Name')['Total_Medals'].sum().reset_index()
 
-app = dash.Dash(__name__)
+app = Dash(__name__)
 server = app.server
 
 # Cores das medalhas
