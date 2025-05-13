@@ -8,7 +8,6 @@ Original file is located at
 """
 
 # !pip install dash
-# !pip install dash-core-components
 # !pip install dash-html-components
 # !pip install plotly
 # !pip install pandas
@@ -18,7 +17,6 @@ Original file is located at
 import pandas as pd
 import plotly.express as px
 import dash
-import dash_core_components as dcc
 import dash_html_components as html
 from dash import Input, Output, dcc, html
 
