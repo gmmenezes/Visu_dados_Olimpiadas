@@ -16,7 +16,6 @@ Original file is located at
 
 import pandas as pd
 import plotly.express as px
-import dash
 from dash import Input, Output, dcc, html, Dash
 
 # Load the CSV file
@@ -55,9 +54,6 @@ default_layout = dict(
     margin=dict(l=40, r=20, t=40, b=30),
     legend=dict(bgcolor='rgba(0,0,0,0)', borderwidth=0)
 )
-
-# Inicialização do app
-app = Dash(__name__)
 
 # Layout da aplicação
 app.layout = html.Div(
