@@ -17,7 +17,6 @@ Original file is located at
 import pandas as pd
 import plotly.express as px
 import dash
-import dash_html_components as html
 from dash import Input, Output, dcc, html
 
 # Load the CSV file
