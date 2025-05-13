@@ -40,101 +40,8 @@ df = df [( df['Year'] >= 1992) & ( df ['Year'] <= 2020)]
 df [ 'Total_Medals' ] = df [ 'Gold' ] + df [ 'Silver' ] + df [ 'Bronze' ]
 df_country_medals = df.groupby('Country_Name')['Total_Medals'].sum().reset_index()
 
-# Gera um mapa gráfico
-map_fig = px.choropleth(df_country_medals,
-                    locations= 'Country_Name' ,      # Coluna DataFrame com nomes de países
-                    locationmode= 'country names' ,
-                    color= 'Total_Medals' ,          # Coluna DataFrame com valores de cor
-                    hover_name= 'Country_Name' ,     # Coluna DataFrame hover info
-                    color_continuous_scale=px.colors.sequential.YlOrRd,   # Defina a escala de cores
-                    title= 'Total de medalhas de 1992 a 2020' )   # Título do enredo
-map_fig.show()
-
-df
-
-#Passo 3 -> Plotando gráfico de área dos 10 paises com maior número de medalhas
-
-# Crie um gráfico de área empilhado para os 10 principais países por contagem total de medalhas
-top_countries = df_country_medals.groupby('Country_Name')['Total_Medals'].sum().nlargest(10).index
-top_countries
-
-df_countries = df.groupby(['Country_Name', 'Year'])['Total_Medals'].sum().reset_index()
-df_countries
-
-df_top_10_countries = df_countries[df_countries['Country_Name'].isin(top_countries)]
-df_top_10_countries
-
-area_fig = px.area(df_top_10_countries,
-                   x= "Year" ,
-                   y= "Total_Medals",
-                   color= "Country_Name",
-                   title= 'Top 10 Países por contagem total de medalhas de 1992 a 2020' )
-
-area_fig.show()
-
-# Crie um aplicativo Dash
-app = dash.Dash(__name__)
-
-
-# Defina o layout
-app.layout = html.Div(children=[
-    dcc.Graph(figure=map_fig),
-    dcc. Graph(figure=area_fig)
-])
-
-# Execute o aplicativo
-if __name__ == '__main__' :
-    app.run( debug = False )  #com debug=True -> fica ativado o modo debug e exibindo as mensagens de erro
-
-#Passo 4 -> Plotando gráfico de Barra com os 10 paises com maior número de medalhas de ouro
-
-# Crie um gráfico de área empilhado para os 10 principais países por contagem total de medalhas
-df_top_countries_gold = df.groupby('Country_Name')['Gold'].sum().nlargest(10).reset_index()
-df_top_countries_gold
-
-# Create a bar chart for the top 10 countries with most gold medals
-
-bar_fig = px.bar(df_top_countries_gold, x='Country_Name', y='Gold', title='Top 10 Countries with Most Gold Medals from 1992 to 2020')
-bar_fig.show()
-
-#Passo 5 -> Estilazando a tela com color_discrete_sequence = gold
-
-bar_fig = px.bar(df_top_countries_gold, x='Country_Name', y='Gold', color_discrete_sequence=['gold'], title='Top 10 Countries with Most Gold Medals from 1992 to 2020')
-bar_fig.show()
-
-# Create a Dash Application
-app = dash.Dash(__name__)
-
-# Define the layout
-app.layout = html.Div([
-    dcc.Graph(figure=map_fig, id='map'),
-    html.Div([
-        dcc.Graph(figure=area_fig, id='area-chart'),
-        dcc.Graph(figure=bar_fig, id='bar-chart')
-    ], style={'display': 'flex'})
-])
-
-
-# Execute o aplicativo
-if __name__ == '__main__' :
-    app.run( debug = False )  #com debug=True -> fica ativado o modo debug e exibindo as mensagens de erro
-
-#Passo 5 -> Estizando a tela com ajuste do mapa dentro do container div
-
-# Create a Dash Application
-app = dash.Dash(__name__)
-
-app.layout = html.Div([
-    dcc.Graph(figure=map_fig, id='map', style={'height': '50vh', 'width': '100%'}),
-    html.Div([
-        dcc.Graph(figure=area_fig, id='area-chart'),
-        dcc.Graph(figure=bar_fig, id='bar-chart')
-    ], style={'display': 'flex'})
-])
-
-# Execute o aplicativo
-if __name__ == '__main__' :
-    app.run( debug = False )  #com debug=True -> fica ativado o modo debug e exibindo as mensagens de erro
+app = dash.Dash(_name_)
+server = app.server
 
 # Cores das medalhas
 medal_colors = {
@@ -306,8 +213,3 @@ def update_bar_chart(selected_year, selected_medal):
 
     fig.update_layout(default_layout, xaxis_tickangle=-45)
     return fig
-
-# ---------------- EXECUÇÃO ----------------
-
-if __name__ == '__main__':
-    app.run(debug=True)
