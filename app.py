@@ -17,7 +17,7 @@ Original file is located at
 import pandas as pd
 import plotly.express as px
 import dash
-from dash import Input, Output, dcc, html
+from dash import Input, Output, dcc, html, Dash
 
 # Load the CSV file
 df=pd.read_csv('Summer_olympic_Medals.csv')
